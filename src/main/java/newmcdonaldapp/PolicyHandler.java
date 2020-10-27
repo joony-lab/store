@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PolicyHandler{
+    @Autowired
+    StoreManagementRepository storeManagementRepository;
+
     @StreamListener(KafkaProcessor.INPUT)
     public void onStringEventListener(@Payload String eventString){
 
@@ -20,6 +23,11 @@ public class PolicyHandler{
 
         if(payApprove.isMe()){
             System.out.println("##### listener OrderStack : " + payApprove.toJson());
+
+            StoreManagement storeManagement = new StoreManagement();
+            storeManagement.setOrderId(payApprove.getOrderId());
+
+            storeManagementRepository.save(storeManagement);
         }
     }
 
