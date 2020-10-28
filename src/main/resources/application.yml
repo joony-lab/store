@@ -39,9 +39,6 @@ server:
   port: 8084
 ---
 
-server:
-  port: 8088
-
 spring:
   profiles: docker
   cloud:
